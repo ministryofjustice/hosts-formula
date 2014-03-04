@@ -1,0 +1,3 @@
+{%- for blob in accumulator['hosts'] %}
+{{ blob }}
+{%- endfor %}

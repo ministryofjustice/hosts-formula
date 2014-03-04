@@ -1,0 +1,9 @@
+{% set hosts = salt['grains.filter_by']({
+    'Debian': {
+        '127.0.0.1': ['localhost', 'localhost.localdomain'],
+        '::1':       ['localhost', 'localhost.localdomain']
+        }
+    },
+    'default': 'Debian',
+}, merge=salt['pillar.get']('hosts',{})) %}
+
