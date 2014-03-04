@@ -3,7 +3,7 @@
 /etc/hosts:
   file:
     - managed
-    - source: salt://hosts/hosts
+    - source: salt://hosts/templates/hosts
     - user: root
     - group: root
     - mode: 644
