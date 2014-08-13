@@ -12,6 +12,7 @@ set_hostname:
   cmd.run:
     - name: hostname {{ grains['id'] }}
     - unless: "[ `hostname` == '{{ grains['id'] }}' ]"
+    - shell: /bin/bash
 
 /etc/hostname:
   file.managed:
