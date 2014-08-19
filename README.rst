@@ -15,3 +15,12 @@ also reads values from the ``hosts`` pillar key:
         - postgresql.local
         - mongodb.local
         - elasticsearch.local
+
+You can also do dynamic hosts (note this will return the first IP salt finds that matches the compound match):
+
+.. code-block:: yaml
+
+    dynamic_hosts:
+      'G@roles:monitoring.server':
+        - graphite.local
+        - monitoring.local

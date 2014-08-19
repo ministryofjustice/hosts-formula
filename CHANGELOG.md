@@ -1,3 +1,7 @@
+## Version 2.x.x
+
+* Allow pillar specification of dynamic hosts.
+
 ## Version 2.0.x
 
 * Removed ipv6 record from hosts file
