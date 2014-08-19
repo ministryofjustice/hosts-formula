@@ -2,8 +2,9 @@ hosts-formula
 =============
 Manages ``/etc/hosts`` file.
 
-It ensures the fqdn of the host is resolved to the IPv4 address from eth0 and
-also reads values from the ``hosts`` pillar key:
+It ensures the minion id of the host is set as the hostname and is added to /etc/hosts as the IPv4 address from eth0.
+
+It also reads values from the ``hosts`` pillar key:
 
 .. code-block:: yaml
 
