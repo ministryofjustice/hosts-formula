@@ -1,3 +1,7 @@
+## Version 2.0.x
+
+* Removed ipv6 record from hosts file
+
 ## Version 2.0.0
 
 * Ensure that the FQDN of the box resolves to the IPV4 of eth0
