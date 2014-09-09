@@ -16,6 +16,6 @@
 
 {%- set dynamic_hosts = salt['pillar.get']('dynamic_hosts', {}) -%}
 {%- for comp_match, hostnames in dynamic_hosts.iteritems() %}
-{% set host_ip = salt['publish.publish'](comp_match, 'network.ip_addrs', expr_form='compound').itervalues().next() %}
+{% set host_ip = salt['publish.publish'](comp_match, 'network.ip_addrs', timeout=60, expr_form='compound').itervalues().next() %}
 {{ host_ip[0] }} {{ hostnames | join(" ") }}
 {%- endfor %}
