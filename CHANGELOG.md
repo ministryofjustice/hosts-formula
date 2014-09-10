@@ -1,6 +1,8 @@
-## Version 2.x.x
+## Version 3.x.x
 
-* Allow pillar specification of dynamic hosts.
+* Non backward compatible changes
+* Sets all minion ids as host entries
+* Allows aliases in pillar 
 
 ## Version 2.0.x
 
