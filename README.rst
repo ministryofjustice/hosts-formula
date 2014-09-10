@@ -2,35 +2,31 @@ hosts-formula
 =============
 Manages ``/etc/hosts`` file.
 
-It ensures the fqdn of the host is resolved to the IPv4 address from eth0 and
-also reads values from the ``hosts`` pillar key:
+It sets the hosts file to include the minion id and ip of all minions. So you will end up with a hosts file like this::
+    127.0.0.1 localhost localhost.localdomain
+    
+    10.0.0.1 minion1.domain
+    10.0.0.2 minion2.domain
 
+It also allows you to specify aliases in the pillar, for example:
 .. code-block:: yaml
 
-    hosts:
-      127.0.0.2:
-        - front.local
-        - back.local
-        - memcache.local
-        - postgresql.local
+    host_aliases:
+      minion1.domain:
         - mongodb.local
         - elasticsearch.local
 
-This creates a file like::
+Will modify the original example to this::
+    127.0.0.1 localhost localhost.localdomain
+    
+    10.0.0.1 minion1.domain mongodb.local elasticsearch.local
+    10.0.0.2 minion2.domain
 
-    127.0.0.2  front.local back.local memcache.local postgresql.local mongodb.local elasticsearch.local
-
-You can also do dynamic hosts (note this will return the first IP salt finds that matches the compound match):
-
+Note you can also include grain values in the pillar i.e. the following will also work
 .. code-block:: yaml
 
-    dynamic_hosts:
-      'G@roles:monitoring.server':
-        - graphite.local
-        - monitoring.local
+    host_aliases:
+      minion1.{{ grains['domain'] }}:
+        - mongodb.local
+        - elasticsearch.local
 
-This creates a file like::
-
-    10.1.1.1  graphite.local monitoring.local
-
-Note the dynamic_hosts and hosts aren't merged so you can end up with multiple entries if you are not careful.
