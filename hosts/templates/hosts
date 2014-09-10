@@ -1,21 +1,12 @@
 {%- set ip = grains['ip_interfaces']['eth0'][0] -%}
 {%- set hosts = salt['pillar.get']('hosts', {}) -%}
-{%- set local = hosts.pop(ip, None) -%}
+{%- set aliases = salt['pillar.get']('aliases', {}) -%}
+{ set hosts = salt['publish.publish']('*', 'network.ip_addrs', timeout=60) %}
 
 127.0.0.1 localhost localhost.localdomain
 
-{% if local %}
-{{ ip }} {{ grains['fqdn'] }} {{ local | join(" ") }}
-{% else %}
-{{ ip }} {{ grains['fqdn'] }}
-{% endif %}
-
-{%- for ip, hostnames in hosts.iteritems() %}
-{{ ip }}  {{ hostnames | join(" ") }}
-{%- endfor %}
-
-{%- set dynamic_hosts = salt['pillar.get']('dynamic_hosts', {}) -%}
-{%- for comp_match, hostnames in dynamic_hosts.iteritems() %}
-{% set host_ip = salt['publish.publish'](comp_match, 'network.ip_addrs', timeout=60, expr_form='compound').itervalues().next() %}
-{{ host_ip[0] }} {{ hostnames | join(" ") }}
+{%- for hostname, ip in hosts.iteritems() %}
+{%- if hostname in aliases -%}
+{%- set hostnames = aliases.get(hostname,[]) -%}
+{{ ip[0] }}  {{ hostname }} {{ hostnames | join(" ") }}
 {%- endfor %}
