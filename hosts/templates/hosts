@@ -5,9 +5,7 @@
 
 127.0.0.1 localhost localhost.localdomain
 
-{%- for hostname, ip in hosts.iteritems() %}
-{%- if hostname in aliases -%}
+{% for hostname, ip in hosts.iteritems() %}
 {%- set hostnames = aliases.get(hostname,[]) -%}
-{%- endif -%}
 {{ ip[0] }}  {{ hostname }} {{ hostnames | join(" ") }}
-{%- endfor %}
+{% endfor -%}
