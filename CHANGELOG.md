@@ -1,11 +1,8 @@
-## Version 3.x.x
+## Version 3.0.0
 
 * Non backward compatible changes. Entries in the hosts pillar will no longer be included in /etc/hosts. To migrate you should create a host_aliases entry in your pillar and create an alias for any entries that used to be static in your pillar. See the README for how the new method works.
 * Sets all minion ids as host entries
 * Allows aliases in pillar 
-
-## Version 2.0.x
-
 * Removed ipv6 record from hosts file
 
 ## Version 2.0.0
