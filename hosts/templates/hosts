@@ -1,14 +1,20 @@
 {%- set my_ip = grains['ip_interfaces']['eth0'][0] -%}
 {%- set hosts = salt['pillar.get']('hosts', {}) -%}
 {%- set aliases = salt['pillar.get']('host_aliases', {}) -%}
-{%- set hosts = salt['publish.publish']('*', 'network.ip_addrs', timeout=60) -%}
+{%- set published_hosts = salt['publish.publish']('*', 'network.ip_addrs', timeout=60) -%}
 
 127.0.0.1 localhost localhost.localdomain
-{%- if grains['fqdn'] not in hosts.keys() %}
+{%- if grains['fqdn'] not in hosts.keys() and grains['fqdn'] not in published_hosts.keys() -%}
 {{ my_ip }} {{ grains['fqdn'] }}
 {%- endif %}
 
-{% for hostname, ip in hosts.iteritems() %}
+
+{% for hostname, ip in published_hosts.iteritems() -%}
 {%- set hostnames = aliases.get(hostname,[]) -%}
 {{ ip[0] }}  {{ hostname }} {{ hostnames | join(" ") }}
+{% endfor -%}
+
+{% for hostname, ip in hosts.iteritems() -%}
+{%- set hostnames = aliases.get(hostname,[]) -%}
+{{ ip }}  {{ hostname }} {{ hostnames | join(" ") }}
 {% endfor -%}
