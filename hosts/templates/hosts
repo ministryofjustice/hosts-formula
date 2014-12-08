@@ -10,7 +10,8 @@
 
 
 {% for hostname, ip in published_hosts.iteritems() -%}
-{{ ip[0] }}  {{ hostname }}
+{%- set hostnames = aliases.get(hostname,[]) -%}
+{{ ip[0] }}  {{ hostname }} {{ hostnames | join(" ") }}
 {% endfor -%}
 
 {% for hostname, ip in hosts.iteritems() -%}
