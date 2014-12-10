@@ -1,7 +1,7 @@
 {%- set my_ip = grains['ip_interfaces']['eth0'][0] -%}
 {%- set hosts = salt['pillar.get']('hosts', {}) -%}
 {%- set aliases = salt['pillar.get']('host_aliases', {}) -%}
-{%- set published_hosts = salt['publish.publish']('*', 'network.ip_addrs', timeout=60) -%}
+{%- set published_hosts = salt['publish.publish']('*', 'network.ip_addrs', 'eth0', timeout=60) -%}
 
 127.0.0.1 localhost localhost.localdomain
 {%- if grains['fqdn'] not in hosts.keys() and grains['fqdn'] not in published_hosts.keys() -%}
